@@ -2,6 +2,11 @@ const recipesRouter = require('express').Router();
 const recipeScraper = require('recipe-scraper');
 
 const Recipe = require('../models/recipe');
+const { paginatedResults } = require('../utils/middleware');
+
+recipesRouter.get('/', paginatedResults(Recipe), (req, res) => {
+  res.json(res.paginatedResults);
+});
 
 recipesRouter.post('/', async (req, res) => {
   const { url } = req.body;
