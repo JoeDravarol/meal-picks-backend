@@ -15,7 +15,9 @@
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-async-errors": "^3.1.1"
+    "express-async-errors": "^3.1.1",
+    "mongoose": "^5.13.7",
+    "recipe-scraper": "^2.1.1"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
