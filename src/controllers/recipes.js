@@ -8,6 +8,12 @@ recipesRouter.get('/', paginatedResults(Recipe), (req, res) => {
   res.json(res.paginatedResults);
 });
 
+recipesRouter.get('/:id', async (req, res) => {
+  const recipe = await Recipe.findById(req.params.id);
+
+  res.json(recipe);
+});
+
 recipesRouter.post('/', async (req, res) => {
   const { url } = req.body;
 
