@@ -1,5 +1,6 @@
 const logger = require('./logger');
 const admin = require('../lib/firebase-admin');
+const User = require('../models/user');
 
 const errorHandler = (error, req, res, next) => {
   logger.error(error.message);
@@ -66,15 +67,15 @@ const tokenExtractor = (req, res, next) => {
 };
 
 const userExtractor = async (req, res, next) => {
-  const decodedToken = await admin.auth.verifyIdToken(req.token);
+  const firebaseUser = await admin.auth.verifyIdToken(req.token);
 
-  if (!req.token || !decodedToken.uid) {
+  if (!req.token || !firebaseUser.uid) {
     return res.status(401).json({
       error: 'Invalid or missing token',
     });
   }
 
-  req.user = decodedToken;
+  req.user = await User.findOne({ uid: firebaseUser.uid }).exec();
   next();
 };
 
