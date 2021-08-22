@@ -1,6 +1,12 @@
 const usersRouter = require('express').Router();
 const User = require('../models/user');
 
+usersRouter.get('/:uid', async (req, res) => {
+  const user = await User.findOne({ uid: req.params.uid });
+
+  res.json(user);
+});
+
 usersRouter.post('/', async (req, res) => {
   const body = req.body;
   const uid = body.uid;

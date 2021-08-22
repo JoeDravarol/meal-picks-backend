@@ -7,6 +7,7 @@ const config = require('./utils/config');
 const logger = require('./utils/logger');
 const app = express();
 const recipesRouter = require('./controllers/recipes');
+const favoriteRecipesRouter = require('./controllers/favoriteRecipes');
 const usersRouter = require('./controllers/users');
 const middleware = require('./utils/middleware');
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use(middleware.tokenExtractor);
 
 app.use('/api/recipes', recipesRouter);
+app.use('/api/favoriteRecipes', favoriteRecipesRouter);
 app.use('/api/users', usersRouter);
 
 app.use(middleware.errorHandler);
