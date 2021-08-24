@@ -10,9 +10,10 @@ favoriteRecipesRouter.get('/', userExtractor, async (req, res) => {
   res.json(recipes);
 });
 
-favoriteRecipesRouter.post('/:id', userExtractor, async (req, res) => {
+favoriteRecipesRouter.post('/', userExtractor, async (req, res) => {
   const user = req.user;
-  const recipe = await Recipe.findById(req.params.id);
+  const body = req.body;
+  const recipe = await Recipe.findById(body.recipeId);
 
   user.favoriteRecipes = [...user.favoriteRecipes, recipe];
   await user.save();
