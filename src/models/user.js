@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema({
       ref: 'Recipe',
     },
   ],
+  mealPlans: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'MealPlan',
+    },
+  ],
 });
 
 userSchema.set('toJSON', {

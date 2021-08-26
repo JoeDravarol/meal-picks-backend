@@ -9,6 +9,7 @@ const app = express();
 const recipesRouter = require('./controllers/recipes');
 const favoriteRecipesRouter = require('./controllers/favoriteRecipes');
 const usersRouter = require('./controllers/users');
+const mealPlansRouter = require('./controllers/mealPlans');
 const middleware = require('./utils/middleware');
 
 mongoose
@@ -32,6 +33,7 @@ app.use(middleware.tokenExtractor);
 app.use('/api/recipes', recipesRouter);
 app.use('/api/favoriteRecipes', favoriteRecipesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/mealPlans', mealPlansRouter);
 
 app.use(middleware.errorHandler);
 
