@@ -6,7 +6,7 @@ if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert({
       ...serviceAccount,
-      private_key: config.FIREBASE_PRIVATE_KEY,
+      private_key: config.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     }),
   });
 }
