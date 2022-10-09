@@ -9,6 +9,7 @@ const app = express();
 const recipesRouter = require('./controllers/recipes');
 const favoriteRecipesRouter = require('./controllers/favoriteRecipes');
 const usersRouter = require('./controllers/users');
+const loginRouter = require('./controllers/login');
 const mealPlansRouter = require('./controllers/mealPlans');
 const middleware = require('./utils/middleware');
 
@@ -33,6 +34,7 @@ app.use(middleware.tokenExtractor);
 app.use('/api/recipes', recipesRouter);
 app.use('/api/favoriteRecipes', favoriteRecipesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/login', loginRouter);
 app.use('/api/mealPlans', mealPlansRouter);
 
 app.use(middleware.errorHandler);
