@@ -1,23 +1,12 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  uid: {
+  username: {
     type: String,
-    required: true,
+    unique: true,
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  provider: {
-    type: String,
-    required: true,
-  },
-  photoUrl: String,
+  name: String,
+  passwordHash: String,
   favoriteRecipes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -37,6 +26,8 @@ userSchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
+    // the passwordHash should not be revealed
+    delete returnedObject.passwordHash;
   },
 });
 
