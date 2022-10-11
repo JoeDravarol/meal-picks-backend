@@ -1,5 +1,6 @@
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 const logger = require('./logger');
-const admin = require('../lib/firebase-admin');
 const User = require('../models/user');
 
 const errorHandler = (error, req, res, next) => {
@@ -9,6 +10,10 @@ const errorHandler = (error, req, res, next) => {
     return res.status(400).json({ error: error.message });
   } else if (error.name === 'CastError') {
     return res.status(400).json({ error: 'malformatted id' });
+  } else if (error.name === 'JsonWebTokenError') {
+    return res.status(401).json({ error: 'invalid token' });
+  } else if (error.name === 'TokenExpiredError') {
+    return res.status(401).json({ error: 'token expired' });
   }
 
   next(error);
@@ -67,15 +72,17 @@ const tokenExtractor = (req, res, next) => {
 };
 
 const userExtractor = async (req, res, next) => {
-  const firebaseUser = await admin.auth.verifyIdToken(req.token);
+  const decodedToken = jwt.verify(req.token, config.SECRET);
 
-  if (!req.token || !firebaseUser.uid) {
+  if (!req.token || !decodedToken.id) {
     return res.status(401).json({
-      error: 'Invalid or missing token',
+      error: 'token missing or invalid',
     });
   }
 
-  req.user = await User.findOne({ uid: firebaseUser.uid }).exec();
+  const user = await User.findById(decodedToken.id);
+
+  req.user = user;
   next();
 };
 

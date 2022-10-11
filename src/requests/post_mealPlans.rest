@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/mealPlans
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM0MmM0MWRjZmQzOGEwZjNhNDM4NjcwIiwiaWF0IjoxNjY1MzIxNDIxfQ.Ijuz4cSHL0OFa-b94f4jk4sDdNTy1BTLUp8Kl41czpA
+
+{
+  "recipeId": "61151172314cbb122bd4eae7",
+  "date": "2022-10-10T17:11:39.554Z"
+}

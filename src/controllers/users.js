@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const User = require('../models/user');
 
@@ -8,21 +9,24 @@ usersRouter.get('/:uid', async (req, res) => {
 });
 
 usersRouter.post('/', async (req, res) => {
-  const body = req.body;
-  const uid = body.uid;
+  const { username, name, password } = req.body;
 
-  const existingUser = await User.findOne({ uid }).exec();
-
+  const existingUser = await User.findOne({ username });
   if (existingUser) {
-    return res.json(existingUser);
+    return res.status(400).json({
+      error: 'username must be unique',
+    });
   }
 
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+
   const user = new User({
-    uid,
-    email: body.email,
-    name: body.name,
-    provider: body.provider,
-    photoUrl: body.photoUrl,
+    username,
+    name,
+    passwordHash,
+    favoriteRecipes: [],
+    mealPlans: [],
   });
 
   const savedUser = await user.save();

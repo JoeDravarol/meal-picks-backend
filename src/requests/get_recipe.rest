@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/recipes/61150f2305fa701172f99b20s
+GET http://localhost:3001/api/recipes/61150f2305fa701172f99b20
