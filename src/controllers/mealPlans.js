@@ -46,10 +46,11 @@ mealPlansRouter.put('/:id', userExtractor, async (req, res) => {
 
   const updatedMealPlan = await MealPlan.findByIdAndUpdate(
     req.params.id,
-    mealPlan,
+    { recipes: mealPlan.recipes },
     { new: true }
   );
   await updatedMealPlan.populate('recipes').execPopulate();
+
   res.json(updatedMealPlan);
 });
 
