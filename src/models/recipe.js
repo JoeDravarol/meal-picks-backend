@@ -29,8 +29,23 @@ const recipeSchema = new mongoose.Schema({
     total: String,
   },
   servings: String,
-  image: String,
+  image: {
+    type: String,
+    required: true,
+  },
+  cloudinaryId: {
+    type: String,
+    require: true,
+  },
   url: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 recipeSchema.set('toJSON', {

@@ -1,8 +1,12 @@
 const recipesRouter = require('express').Router();
-const recipeScraper = require('recipe-scraper');
 
 const Recipe = require('../models/recipe');
-const { paginatedResults } = require('../utils/middleware');
+const {
+  paginatedResults,
+  userExtractor,
+  upload,
+} = require('../utils/middleware');
+const cloudinary = require('../utils/cloudinary');
 
 recipesRouter.get('/', paginatedResults(Recipe), (req, res) => {
   res.json(res.paginatedResults);
@@ -14,15 +18,41 @@ recipesRouter.get('/:id', async (req, res) => {
   res.json(recipe);
 });
 
-recipesRouter.post('/', async (req, res) => {
-  const { url } = req.body;
+recipesRouter.post(
+  '/',
+  [userExtractor, upload.single('file')],
+  async (req, res) => {
+    const {
+      name,
+      description,
+      ingredients,
+      instructions,
+      tags,
+      time,
+      servings,
+      url,
+    } = req.body;
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
 
-  const scrapedRecipe = await recipeScraper(url);
+    const recipe = new Recipe({
+      url,
+      name,
+      description,
+      tags,
+      servings,
+      time: JSON.parse(time),
+      ingredients: JSON.parse(ingredients),
+      instructions: JSON.parse(instructions),
+      image: result.secure_url,
+      cloudinaryId: result.public_id,
+      user: req.user_id,
+    });
 
-  const recipe = new Recipe({ ...scrapedRecipe, url });
-  const savedRecipe = await recipe.save();
+    const savedRecipe = await recipe.save();
 
-  res.status(201).json(savedRecipe);
-});
+    res.status(201).json(savedRecipe);
+  }
+);
 
 module.exports = recipesRouter;
