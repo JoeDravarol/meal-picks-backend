@@ -1,6 +1,16 @@
 const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const User = require('../models/user');
+const { userExtractor } = require('../utils/middleware');
+
+usersRouter.get('/me', userExtractor, (req, res) => {
+  const user = {
+    ...req.user,
+    expiresIn: req.user.expiresIn,
+  };
+
+  res.json(user);
+});
 
 usersRouter.get('/:uid', async (req, res) => {
   const user = await User.findOne({ uid: req.params.uid });

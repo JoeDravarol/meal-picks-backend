@@ -85,6 +85,7 @@ const userExtractor = async (req, res, next) => {
   const user = await User.findById(decodedToken.id);
 
   req.user = user;
+  req.user.expiresIn = decodedToken.exp * 1000 - Date.now();
   next();
 };
 
