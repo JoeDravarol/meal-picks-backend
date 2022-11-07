@@ -13,7 +13,9 @@ recipesRouter.get('/', paginatedResults(Recipe), (req, res) => {
 });
 
 recipesRouter.get('/:id', async (req, res) => {
-  const recipe = await Recipe.findById(req.params.id);
+  const recipe = await Recipe.findById(req.params.id).populate('user', {
+    username: 1,
+  });
 
   res.json(recipe);
 });
