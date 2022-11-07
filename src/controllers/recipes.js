@@ -46,7 +46,7 @@ recipesRouter.post(
       instructions: JSON.parse(instructions),
       image: result.secure_url,
       cloudinaryId: result.public_id,
-      user: req.user_id,
+      user: req.user._id,
     });
 
     const savedRecipe = await recipe.save();
