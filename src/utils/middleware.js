@@ -55,7 +55,12 @@ const paginatedResults = model => {
       };
     }
 
-    results.results = await model.find().limit(limit).skip(startIndex).exec();
+    results.results = await model
+      .find()
+      .sort({ createdAt: 'desc' })
+      .limit(limit)
+      .skip(startIndex)
+      .exec();
     res.paginatedResults = results;
     next();
   };
