@@ -57,4 +57,33 @@ recipesRouter.post(
   }
 );
 
+recipesRouter.put('/edit/:id', userExtractor, async (req, res) => {
+  const user = req.user;
+  const recipe = await Recipe.findById(req.params.id);
+  const isNotCreatedByUser = !recipe.user.equals(user._id);
+
+  if (isNotCreatedByUser) {
+    return res.status(400).json({
+      error: 'Unauthorized user',
+    });
+  }
+
+  const { time, ingredients, instructions, ...rest } = req.body;
+  const newRecipeInfo = {
+    ...rest,
+    time: JSON.parse(time),
+    ingredients: JSON.parse(ingredients),
+    instructions: JSON.parse(instructions),
+    user: user._id,
+  };
+
+  const updatedRecipe = await Recipe.findByIdAndUpdate(
+    req.params.id,
+    newRecipeInfo,
+    { new: true }
+  );
+
+  res.json(updatedRecipe);
+});
+
 module.exports = recipesRouter;
