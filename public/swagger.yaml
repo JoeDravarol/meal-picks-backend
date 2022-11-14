@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Meal Picks API
+  description: |-
+    # Meal Picks API
+    Meal Picks Backend is an API server for recipe based projects. If you want to have an app or website with recipes, but don't want to spend a lot of time - this can be a good choice.
+    # Getting Started
+      Requests can be made with `curl` or other helper libraries by following regular REST calls. For example, here is how to GET the resource for the recipe *Chicken Karaage*:
+      `curl https://drab-tan-cow-wig.cyclic.app/api/recipes/636ad9b73026d407e1585b0f`
+      Calling this resource will respond with the following object:
+      ```json
+      {
+        "id": "636ad9b73026d407e1585b0f",
+        "name": "Chicken Karaage",
+        "description": "Tori no karaage (a.k.a. Japanese fried chicken) is crispy, juicy, and always keeps you coming back for more. The soy in the marinade gives bite-size pieces of chicken thigh a savory punch, while a dry sake (like this one) imparts tons of floral, nutty flavor. Meanwhile, equal parts all-purpose flour, rice flour, and cornstarch (or potato starch)...",
+        "servings": "4",
+        "images": "https://res.cloudinary.com/dakoiwa8i/image/upload/v1667946935/l8nlbyqbbbwzj77huyxk.webp",
+        ...
+      }
+      ```
+    # Base URL
+      Users must prepend all resource calls with this base URL:
+      `https://drab-tan-cow-wig.cyclic.app/api`
+    # Authentication
+       There is no authentication necessary for the Meal Picks API.
+  license:
+    name: MIT License
+    url: https://github.com/JoeDravarol/git/git-scm.com/blob/main/LICENSE.txt
+  version: 1.0.0
+# the domain of the service
+host: drab-tan-cow-wig.cyclic.app/api
+schemes:
+  - https
+server:
+  url: https://drab-tan-cow-wig.cyclic.app/api
+  description: Production server
+paths:
+  /recipes?page=:
+    get:
+        summary: Return a list of recipes
+        description: |
+          This endpoint returns all recipes information from a specified page.
+        parameters:
+          - in: query
+            name: page
+            description: return results from specified page
+            required: true
+            type: integer
+          - in: query
+            name: limit
+            description: amount of results (default 10)
+            required: false
+            type: integer
+        x-code-samples:
+          - lang: curl
+            source: |
+              curl -X GET -H "Content-Type: application/json" https://drab-tan-cow-wig.cyclic.app/api/recipes?page=1
+          - lang: Node.V8
+            source: |
+              fetch('https://drab-tan-cow-wig.cyclic.app/api/recipes?page=1')
+                .then(response => {
+                  console.log(response); // response object
+                });
+        responses:
+          200:
+            description: A JSON object containing pagination info and array of recipes
+            content:
+              application/json:
+                schema:
+                  type: object
+                  allOf:
+                    - $ref: '#/components/schemas/PaginationResponse'
+                    - properties:
+                        results:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/ArrayOfRecipes'
+            examples:
+              application/json:
+                totalPage: 4
+                next:
+                  page: 2
+                  limit: 10
+                previous:
+                  page: 1
+                  limit: 10
+                results:
+                  - time:
+                      prep: ''
+                      active: 30 minutes
+                      cook: ''
+                      total: 30 minutes
+                    ingredients:
+                      - 1 1/2 cups whole-milk ricotta
+                      - 1 tsp. finely grated lemon zest
+                      - 5 Tbsp. extra-virgin olive oil, divided, plus more for grill and drizzling
+                      - 2 3/4 tsp. kosher salt, divided
+                      - 2 (1"–1 1/2"-thick) boneless strip steaks (about 1 1/2 lb. total), patted dry
+                      - 1 1/2 tsp. freshly ground black pepper, divided, plus more
+                      - 2 small eggplants (about 11 oz. total), trimmed, sliced lengthwise into 1" spears
+                      - 1/2 lb. sugar snap peas, strings removed
+                      - Flaky sea salt
+                      - 1/2 cup mint leaves
+                      - 1 Fresno chile, thinly sliced (optional)
+                      - Lemon wedges (for serving)
+                    instructions:
+                      - Whisk ricotta, lemon zest, 3 Tbsp. oil, and 3/4 tsp. kosher salt in a large bowl until smooth and fluffy; set aside.
+                      - Prepare a grill for medium-high heat; oil grate. Season steaks on all sides with 1 1/2 tsp. kosher salt and 1 tsp. pepper. Grill steaks until lightly charred and an instant-read thermometer inserted into the thickest part registers 120°F, 5–7 minutes per side for medium-rare. Transfer to a cutting board and let rest 10 minutes before slicing against the grain.
+                      - While steak rests, toss eggplant with 2 Tbsp. oil; season with 1/2 tsp. kosher salt and 1/2 tsp. pepper. Grill eggplant, turning often, until skin is lightly charred and flesh is softened, about 5 minutes.
+                      - Grill peas in a grill basket or on a wire rack set over grill alongside eggplant, turning often, until lightly charred and softened, about 3 minutes.
+                      - Spread reserved ricotta on a platter. Arrange eggplant and peas over. Drizzle with oil; season with sea salt and pepper. Top with mint and chile (if using). Serve with lemon wedges alongside.
+                      - Transfer steak to another platter. Drizzle with oil, then season with sea salt and pepper. Serve alongside vegetables.
+                    tags: []
+                    url: https://www.epicurious.com/recipes/food/views/grilled-steak-with-peas-and-eggplant-over-whipped-ricotta
+                    name: Grilled Steak With Peas and Eggplant Over Whipped Ricotta
+                    description: 'No pots or pans needed for this easy summertime recipe: The eggplant spears and sugar snap peas are charred side by side on the grill, and they perfectly complement a simple grilled steak. The lemony whipped ricotta provides a creamy brightness to balance out the smoky meat and veg.'
+                    servings: '4'
+                    image: https://res.cloudinary.com/dakoiwa8i/image/upload/v1667867115/rm9ejlwomp3zv5mn2pte.webp
+                    cloudinaryId: rm9ejlwomp3zv5mn2pte
+                    user: 6355cc6eb3aa930d82077fee
+                    createdAt: '2022-11-08T00:25:15.072Z'
+                    id: 6369a1ebc91f162b4d2b3c49
+          400:
+            description: Bad request
+components:
+  schemas:
+    PaginationResponse:
+      type: object
+      properties:
+        totalPage:
+          type: integer
+        next:
+          type: object
+          properties:
+            page:
+              type: integer
+            limit:
+              type: integer
+        previous:
+          type: object
+          properties:
+            page:
+              type: integer
+            limit:
+              type: integer
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier representing a specific recipe
+        url:
+          type: string
+          description: URL of the original recipe
+        name:
+          type: string
+          description: Name of the recipe
+        description:
+          type: string
+          description: Description of the recipe
+        servings:
+          type: string
+          description: The number of portions the recipe yield
+        image:
+          type: string
+          description: Image URL
+        cloudinaryId:
+          type: string
+          description: Unique indentifier representing the image on Cloundinary
+        createdAt:
+          type: string
+          format: date
+          description: ISO date respresent when the recipe is created
+        user:
+          type: string
+          description: Unique indentifier representing a user that created the recipe
+        ingredients:
+          type: array
+          description: Ingredients required for the recipe
+          items:
+            type: string
+        instructions:
+          type: array
+          description: Instructions on how to prepare the recipe
+          items:
+            type: string
+        tags:
+          type: array
+          description: A label for identification and give other information
+          items:
+            type: string
+        time:
+          type: object
+          properties:
+            prep:
+              type: string
+              description: Recipe's prepartion time
+            cook:
+              type: string
+              description: Recipe's cooking time
+            active:
+              type: string
+              description: Recipe's active time
+            inactive:
+              type: string
+              description: Recipe's inactive time
+            total: 
+              type: string
+              description: Recipe's total time
+    ArrayOfRecipes:
+      type: array
+      items:
+        $ref: '#/components/schemas/Recipe'
