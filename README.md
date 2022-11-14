@@ -4,6 +4,7 @@
 
 ## Table of contents
 
+- [Endpoints](https://github.com/joedravarol/meal-picks-backend#endpoints)
 - [Technical Design](https://github.com/joedravarol/meal-picks-backend#technical-design)
 - [Getting Started](https://github.com/joedravarol/meal-picks-backend#getting-started)
 - [Built With](https://github.com/joedravarol/meal-picks-backend#built-with)
@@ -11,9 +12,17 @@
 - [License](https://github.com/joedravarol/meal-picks-backend#license)
 - [Acknowledgement](https://github.com/joedravarol/meal-picks-backend#acknowledgement)
 
+## Endpoints
+
+- `/api/recipes`
+- `/api/favoriteRecipes`
+- `/api/mealPlans`
+- `/api/users`
+- `/api/login`
+
 ## Technical Design
 
-![Meal Picks UML](public/images/uml.svg)
+![Meal Picks UML](public/images/uml.png)
 
 The application is a simple CRUD system around recipes and meals. In the domain model, a **recipe** is a set of instructions for preparing a particular dish, including the list of ingredients required. A **meal plan** is a dish planned at a specified date.
 
