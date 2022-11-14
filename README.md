@@ -13,7 +13,7 @@
 
 ## Technical Design
 
-![Meal Picks UML](public/images/uml.png)
+![Meal Picks UML](public/images/uml.svg)
 
 The application is a simple CRUD system around recipes and meals. In the domain model, a **recipe** is a set of instructions for preparing a particular dish, including the list of ingredients required. A **meal plan** is a dish planned at a specified date.
 
