@@ -122,6 +122,59 @@ paths:
                     id: 6369a1ebc91f162b4d2b3c49
           400:
             description: Bad request
+  /recipes/{id}:
+    get:
+      summary: Recipe ID
+      description: |
+        Returns a recipe based on a single ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID of the recipe to get
+          type: string
+          required: true
+      x-code-samples:
+          - lang: curl
+            source: |
+              curl -X GET -H "Content-Type: application/json" https://drab-tan-cow-wig.cyclic.app/api/recipes/636ad9b73026d407e1585b0f
+          - lang: Node.V8
+            source: |
+              fetch('https://drab-tan-cow-wig.cyclic.app/api/recipes/636ad9b73026d407e1585b0f')
+                .then(response => {
+                  console.log(response); // response object
+                });
+      responses:
+        200:
+          description: A single recipe is returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          examples:
+            application/json:
+              id: 636ad9b73026d407e1585b0f
+              name: Chicken Karaage
+              url: https://www.epicurious.com/recipes/food/views/ba-syn-tori-kara-age
+              description: |
+                Tori no karaage (a.k.a. Japanese fried chicken) is crispy, juicy, and always keeps you coming back for more. The soy in the marinade gives bite-size pieces of chicken thigh a savory punch, while a dry sake (like this one) imparts tons of floral, nutty flavor. Meanwhile, equal parts all-purpose flour, rice flour, and cornstarch (or potato starch) ensure the crust is crunchy, while dry spices like mustard, garlic, onion, and curry powder make a dipping sauce superfluous. A squeeze of lemon juice, however, cuts through the richness and makes each bite that much more satisfying. If you’re new to frying, keep a few rules in mind: When in doubt, reach for a bigger pot, and make sure to have ready a plate or tray lined with paper towels to land the chicken once it’s cooked. Even better, fit a wire rack onto a sheet pan and slide it into a warm oven (about 250°) to keep the karaage chicken hot and crispy while you fry the next batch. If you don’t have one, pick up an instant-read thermometer to test the oil temperature periodically while cooking; a spider also comes in handy for fishing this Japanese appetizer out of the fryer.
+              servings: 4
+              time:
+                prep: ''
+                active: 40 minutes
+                cook: ''
+                total: 40 minutes plus marinating
+              ingredients: ["1½ cups sake","¼ cup soy sauce (2 oz.)","2 Tbsp. thinly sliced scallion (dark green part only)","1½ Tbsp. grated peeled fresh ginger (about .75 oz.)","1¾ lb. boneless chicken thighs with skin, cut into 1½\" cubes","1 cup all-purpose flour (about 5 oz.)","1 cup cornstarch (about 5 oz.)","1 cup rice flour (about 5 oz.)","1 Tbsp. dry mustard","1 Tbsp. garlic powder","1 Tbsp. onion powder","2 Tbsp. kosher salt","2 tsp. curry powder","Vegetable oil (for frying)","Lemon wedges"]
+              instructions: ["Combine sake, soy sauce, scallion, and ginger in a large bowl. Add chicken; toss to coat. Cover and chill at least 4 hours and up to 12 hours.","Whisk all-purpose flour and next 7 ingredients in a large bowl.","Pour vegetable oil into a large pot to a depth of 2\". Attach a deep-fry thermometer to side of pot. Heat oil over medium heat to 325°.","Drain chicken. Working in batches, dredge chicken pieces in flour mixture, shaking off excess. Working in batches, fry chicken, turning occasionally, until golden brown and cooked through, 8–9 minutes per batch. Using a slotted spoon, transfer chicken to a paper towel-lined plate. Let oil return to 325° between batches. Serve with lemon wedges."]
+              tags: []
+              image: https://res.cloudinary.com/dakoiwa8i/image/upload/v1667946935/l8nlbyqbbbwzj77huyxk.webp
+              cloudinaryId: l8nlbyqbbbwzj77huyxk
+              user: 6355cc6eb3aa930d82077fee
+              createdAt: 2022-11-08T22:35:35.903Z
+                
+        400:
+          description: Bad request
+        404:
+          description: Not found
 components:
   schemas:
     PaginationResponse:
